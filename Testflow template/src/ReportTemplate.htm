@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- saved from url=(0107)file:///C:/Users/mike.chester/OneDrive%20-%20Metron%20Group%20Limited/ABI/Template%20FAT/ReportTemplate.htm -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
-    <title>Factory Acceptance Test</title>
+    <title><!--REPORT_TITLE--></title>
 
    <!--Normalize.min.css v8.0.1 | MIT License | github.com/necolas/normalize.css-->
     <!--Provides better cross-browser consistency in the default styling of HTML elements.-->
@@ -60,6 +60,11 @@
         .column-40 {
             float: left;
             width: 40%;
+        }
+        
+        .column-45 {
+            float: left;
+            width: 45%;
         }
 
         .column-50 {
@@ -191,6 +196,7 @@
         .testflow-report pre,
         .testflow-report textarea,
         .testflow-report label,
+        .testflow-report p,
         .testflow-report input[type=text] {
             font-family: Tahoma;
             font-size: 8pt;
@@ -973,6 +979,10 @@
             width: 38%;
         }
 
+        .column-45 {
+            width: 43%;
+        }
+
         .column-50 {
             width: 48%;
         }
@@ -1134,7 +1144,7 @@
             </div>
 
             <div class="testflow-report__title">
-                Factory Acceptance Test
+                <!--REPORT_TITLE-->
             </div>
 
             <div class="testflow-report-details">
@@ -1144,23 +1154,32 @@
                 <div class="row">
                     <div class="testflow-report-details__content column-50">
                         <div class="row">
-                            <label class="column-30">TestFlow Name</label><input class="column-70" type="text" readonly="" value="Template FAT 0.1.tfl">
+                            <label class="column-25">TestFlow Name</label>
+                            <input class="column-75" type="text" readonly="" value="<!--TESTFLOW_NAME-->">
                         </div>
                         <div class="row">
-                            <label class="column-30">Operator</label><input class="column-70" type="text" readonly="" value="Mike">
+                            <label class="column-25">Operator</label>
+                            <input class="column-75" type="text" readonly="" value="<!--OPERATOR_NAME-->">
                         </div>
                         <div class="row">
-                            <label class="column-30">Date</label><input class="column-70" type="text" readonly="" value="09/10/2023">
+                            <label class="column-25">Date</label>
+                            <input class="column-75" type="text" readonly="" value="<!--DATE-->">
                         </div>
                         <div class="row">
-                            <label class="column-30">Time</label><input class="column-70" type="text" readonly="" value="12:31:48">
+                            <label class="column-25">Time</label>
+                            <input class="column-75" type="text" readonly="" value="<!--TIME-->">
+                        </div>
+                        <div class="row">
+                            <label class="column-25">Testflow Version</label>
+                            <input class="column-75" type="text" readonly="" value="v0.2">
                         </div>
                     </div>
 
                     <div class="testflow-report-details__content column-50">
                         <div class="row">
-                            <label class="column-20">Comment</label>
-                            <textarea style="height:100px;" readonly="" class="column-80"></textarea>
+
+                            <label class="column-20">Original Board Information</label>
+                        <textarea style="height:105px;" readonly="" class="column-80"><!--ORIGINAL_BOARD--></textarea>
                         </div>
                     </div>
                 </div>
@@ -1171,38 +1190,50 @@
             <div class="testflow-report-details">
                 <div class="testflow-report-details__header">Equipment Under Test</div>
                 <div class="row">
+                <!-- Add image
                     <div class="testflow-report-details__content column-40">
                         <input type="file" id="select_equipment_image_file" onchange="handleEquipmentImgSelect(event)" accept=".png, .jpg, .jpeg, .bmp" style="display: none;">
                         <img id="equipment_image" ondblclick="handleEquipmentImgDblClick()" alt="DOUBLE CLICK TO ADD IMAGE (Use external browser)" src="file:///C:/Users/mike.chester/OneDrive%20-%20Metron%20Group%20Limited/ABI/Template%20FAT/ReportTemplate.htm">
                     </div>
-
-                    <div class="testflow-report-details__content column-60">
+                -->
+                    
+                    <div class="testflow-report-details__content column-50">
                         <div class="row">
-                            <label class="column-30">Customer</label>
-                            <input class="column-70" type="text" readonly="" value="Test">
+                            <label class="column-25">Customer</label>
+                            <input class="column-75" type="text" readonly="" value="<!--CUSTOMER-->">
                         </div>
                         <div class="row">
-                            <label class="column-30">Job Number</label>
-                            <input class="column-70" type="text" readonly="" value="">
+                            <label class="column-25">Job Number</label>
+                            <input class="column-75" type="text" readonly="" value="<!--JOB_NUMBER-->">
                         </div>
                         <div class="row">
-                            <label class="column-30">Part Name</label>
-                            <input class="column-70" type="text" readonly="" value="">
+                            <label class="column-25">Part Name</label>
+                            <input class="column-75" type="text" readonly="" value="<!--PART_NAME-->">
                         </div>
                         <div class="row">
-                            <label class="column-30">Part Number</label>
-                            <input class="column-70" type="text" readonly="" value="">
+                            <label class="column-25">Part Number</label>
+                            <input class="column-75" type="text" readonly="" value="<!--PART_NUMBER-->">
                         </div>
                         <div class="row">
-                            <label class="column-30">Serial Number</label>
-                            <input class="column-40" type="text" readonly="" value="">
+                            <label class="column-25">Serial Number</label>
+                            <input class="column-45" type="text" readonly="" value="<!--SERIAL_NUMBER-->">
                             <label class="column-5"></label>
                             <label class="column-15">Revision</label>
-                            <input class="column-10" type="text" readonly="" value="">
+                            <input class="column-10" type="text" readonly="" value="<!--REVISION-->">
                         </div>
                     </div>
+                    
+                    <div class="testflow-report-details__content column-50">
+                        <label class="column-20">Comments</label>
+                        <textarea style="height:105px;" readonly="" class="column-80">
+Pre-Test Comments: &#13;
+<!--PRE_COMMENT--> &#13; 
+---------------------------------------------------- &#13; &#13;
+Post-Test Comments: &#13;
+<!--POST_COMMENT--></textarea>
+                    </div>
                 </div>
-
+                            
                 <div class="testflow-report-details__footer"></div>
             </div>
         </div>
@@ -1254,9 +1285,6 @@
     ApplyStepFilter();
 </script>
 
-<div class='testflow-report__watermark'>
-Created By SYSTEM 8 Ultimate U3.58  &#169;ABI Electronics 2023
-</div>
 </body><!--Emulate :after for system 8 internal browser support --><!--[if lt IE 9]>
 <script>
     function getElementsByClassName(className, tag, elm) {
