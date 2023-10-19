@@ -1,0 +1,1300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0107)file:///C:/Users/mike.chester/OneDrive%20-%20Metron%20Group%20Limited/ABI/Template%20FAT/ReportTemplate.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>TestFlow Report</title>
+
+   <!--Normalize.min.css v8.0.1 | MIT License | github.com/necolas/normalize.css-->
+    <!--Provides better cross-browser consistency in the default styling of HTML elements.-->
+    <style>
+        html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}
+   </style>
+
+    <!--CSS for helper styles-->
+    <style>
+        * {
+            /* The width and height properties include the content, padding, and border, but do not include the margin.*/
+            box-sizing: border-box;
+            /* Debug */
+            /*border: dotted 1px #ff00ff;*/
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .column-5 {
+            float: left;
+            width: 5%;
+        }
+
+        .column-10 {
+            float: left;
+            width: 10%;
+        }
+
+        .column-15 {
+            float: left;
+            width: 15%;
+        }
+
+        .column-20 {
+            float: left;
+            width: 20%;
+        }
+
+        .column-25 {
+            float: left;
+            width: 25%;
+        }
+
+        .column-30 {
+            float: left;
+            width: 30%;
+        }
+
+        .column-33 {
+            float: left;
+            width: 33.333%;
+        }
+
+        .column-40 {
+            float: left;
+            width: 40%;
+        }
+
+        .column-50 {
+            float: left;
+            width: 50%;
+        }
+
+        .column-60 {
+            float: left;
+            width: 60%;
+        }
+
+        .column-66 {
+            float: left;
+            width: 66.666%;
+        }
+
+        .column-70 {
+            float: left;
+            width: 70%;
+        }
+
+        .column-75 {
+            float: left;
+            width: 75%;
+        }
+
+        .column-80 {
+            float: left;
+            width: 80%;
+        }
+
+        .column-90 {
+            float: left;
+            width: 90%;
+        }
+
+        .column-100 {
+            float: left;
+            width: 100%;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+
+    <!--CSS for nav class' -->
+    <style type="text/css">
+        .navbar {
+            background-color: #0ba6df;
+            border-radius: 3px;
+
+            padding-top: 5px;
+            padding-right: 5px;
+            padding-bottom: 5px;
+            padding-left: 5px;
+
+            margin-top: 20px;
+            margin-right: 0px;
+            margin-bottom: 20px;
+            margin-left: 0px;
+        }
+
+        .navbar-button {
+            background-color: #cef0fd;
+
+            border-color: #0504AA;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 3px;
+
+            padding-top: 5px;
+            padding-right: 10px;
+            padding-bottom: 5px;
+            padding-left: 10px;
+
+            margin-top: 0px;
+            margin-right: 5px;
+            margin-bottom: 0px;
+            margin-left: 5px;
+        }
+
+        .navbar-button__caption {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+
+            padding-top: 6px;
+            padding-right: 0px;
+            padding-bottom: 3px;
+            padding-left: 0px;
+        }
+
+        /* Handle changes required for better printing */
+        @media print {
+            .navbar {
+                display: none;
+            }
+        }
+    </style>
+
+    <!--CSS for testflow-report class' -->
+    <style type="text/css">
+        .testflow-report {
+            font-size: 8pt;
+            font-family: tahoma;
+            color: #000000;
+            /* Make the report a maximum width and center it in the browser */
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+
+            padding-top: 1px;
+            padding-right: 1px;
+            padding-bottom: 1px;
+            padding-left: 1px;
+
+            background-color: #0504AA;
+            border-color: #0504AA;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 5px;
+        }
+
+        .testflow-report pre,
+        .testflow-report textarea,
+        .testflow-report label,
+        .testflow-report input[type=text] {
+            font-family: Tahoma;
+            font-size: 8pt;
+            color: #000000;
+
+            margin-top: 2px;
+            margin-right: 0px;
+            margin-bottom: 2px;
+            margin-left: 0px;
+        }
+
+
+        .testflow-report__header {
+            overflow: hidden;
+            background-color: #ffffff;
+            border-radius: 0px 0px 3px 3px;
+            margin-bottom: 50px;
+        }
+
+        .testflow-report__title {
+            text-align: center;
+            font-size: 24pt;
+            font-weight: bold;
+            color: #0504AA;
+
+            margin-top: 20px;
+            margin-right: 0px;
+            margin-bottom: 20px;
+            margin-left: 0px;
+        }
+
+        .testflow-report__footer {
+            font-size: 12pt;
+            font-weight: bold;
+            text-align: center;
+
+            background-color: #0ba6df;
+            color: #ffffff;
+            clear: both;
+            border-radius: 0px 0px 3px 3px;
+
+            padding-top: 10px;
+            padding-right: 0px;
+            padding-bottom: 10px;
+            padding-left: 0px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .testflow-report__watermark {
+			text-align: center;
+			/* color: #0ba6df; */
+            color: #ffffff;
+            margin-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .testflow-report-details {
+            /* Apply a border to the left and right */
+            border-color: #0504AA;
+            border-width: 5px;
+            border-style: none solid;
+            border-radius: 5px;
+
+            background-color: #ffffff;
+
+            margin-top: 10px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+        }
+
+        .testflow-report-details__header {
+            font-size: 10pt;
+            font-weight: bold;
+            text-align: left;
+            text-transform: uppercase;
+
+            background-color: #0504AA;
+            color: #ffffff;
+
+            padding-top: 5px;
+            padding-right: 2px;
+            padding-bottom: 5px;
+            padding-left: 2px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .testflow-report-details__content {
+            overflow: auto;
+            max-height: 500px;
+
+            padding-top: 5px;
+            padding-right: 5px;
+            padding-bottom: 5px;
+            padding-left: 5px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .testflow-report-details__content img {
+            width: 100%;
+            vertical-align: middle;
+
+            border-color: #0504AA;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 1px;
+        }
+
+        .testflow-report-details__footer {
+            text-align: center;
+            text-transform: uppercase;
+
+            background-color: #0504AA;
+            color: #ffffff;
+
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 2px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            clear: both;
+        }
+
+        /* Handle changes required for better printing */
+        @media print {
+            .testflow-report {
+                background-color: transparent;
+                border-width: 1px;
+            }
+
+            .testflow-report__header {
+                background-image: none;
+                background-color: transparent;
+            }
+        }
+    </style>
+
+    <!--CSS for testflow-step class' -->
+    <style type="text/css">
+        .testflow-step {
+            /* Apply a border to the left and right */
+            border-color: #005cb8;
+            border-width: 5px;
+            border-style: none solid;
+            border-radius: 5px;
+
+            background-color: #b3d9ff;
+
+            /* Sepertate steps vertically */
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 50px;
+            margin-left: 0px;
+        }
+
+        .testflow-step.Fail {
+            border-color: #dc143c;
+            background-color: #f08080;
+        }
+
+        .testflow-step.Pass {
+            border-color: #228b22;
+            background-color: #90ee90;
+        }
+
+        .testflow-step__header {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+
+            font-size: 12pt;
+            font-weight: bold;
+            text-align: left;
+            text-transform: uppercase;
+
+            background-color: #005cb8;
+            color: #ffffff;
+
+            padding-top: 10px;
+            padding-right: 0px;
+            padding-bottom: 10px;
+            padding-left: 0px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .testflow-step.Fail .testflow-step__header {
+            background-color: #dc143c;
+        }
+
+        .testflow-step.Pass .testflow-step__header {
+            background-color: #228b22;
+        }
+
+        .testflow-step__content {
+            overflow: auto;
+            max-height: 1000px;
+
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .testflow-step__footer {
+            text-align: center;
+            text-transform: uppercase;
+
+            background-color: #005cb8;
+            color: #ffffff;
+
+            padding-top: 2px;
+            padding-right: 5px;
+            padding-bottom: 5px;
+            padding-left: 0px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            clear: both;
+        }
+
+        .testflow-step.Fail .testflow-step__footer {
+            background-color: #dc143c;
+        }
+
+        .testflow-step.Pass .testflow-step__footer {
+            background-color: #228b22;
+        }
+
+        /* Handle changes required for better printing */
+        @media print {
+            .testflow-step {
+                page-break-inside: avoid;
+                background-color: transparent;
+                margin-bottom: 10px;
+            }
+
+            .testflow-step.Fail {
+                background-color: transparent;
+            }
+
+            .testflow-step.Pass {
+                background-color: transparent;
+            }
+        }
+    </style>
+
+    <!--CSS for testflow-entry class' -->
+    <style type="text/css">
+        .testflow-entry {
+            /* Apply a border to the left and right */
+            border-color: #0504AA;
+            border-width: 2px;
+            border-style: none solid;
+            border-radius: 1px;
+
+            background-color: #b3d9ff;
+
+            margin-top: 10px;
+            margin-right: 5px;
+            margin-bottom: 10px;
+            margin-left: 5px;
+        }
+
+        .testflow-entry__header {
+            font-size: 10pt;
+            font-weight: bold;
+            text-align: left;
+            text-transform: uppercase;
+
+            background-color: #0504AA;
+            color: #ffffff;
+
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 2px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .testflow-entry__content {
+            overflow: auto;
+            max-height: 500px;
+
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .testflow-entry__footer {
+            text-align: center;
+            text-transform: uppercase;
+
+            background-color: #0504AA;
+            color: #ffffff;
+
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 2px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            clear: both;
+        }
+
+        /* Handle changes required for better printing */
+        @media print {
+            .testflow-entry {
+                page-break-inside: avoid;
+                background-color: transparent;
+            }
+
+            .testflow-entry__content {
+                max-height: none;
+            }
+        }
+    </style>
+
+	<!--CSS for lists-->
+	<style>
+	ul.no-bullets {
+	  list-style-type: none;
+	  padding: 0; /* Remove padding */
+	  margin: 0; /* Remove margins */
+	}
+	</style>
+
+    <!--CSS for all tables -->
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            overflow: auto;
+            width: 100%;
+        }
+
+        th {
+            text-align: center;
+
+            border-color: #0504AA;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 0px;
+
+            background-color: #0ba6df;
+            color: #ffffff;
+        }
+
+        td {
+            text-align: center;
+
+            border-color: #0504AA;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 0px;
+
+            padding-top: 1px;
+            padding-right: 5px;
+            padding-bottom: 1px;
+            padding-left: 5px;
+        }
+
+        td img {
+            vertical-align: middle;
+        }
+
+        tr {
+            background-color: #cef0fd;
+            color: #0504AA;
+        }
+
+        tr:nth-child(even) {
+            background-color: #e7f7fe;
+        }
+
+        tr.Fail {
+            font-size: 1.25em;
+            background-color: #dc143c;
+            color: #ffffff;
+        }
+    </style>
+
+    <!--CSS for ic-data class'-->
+    <style>
+        /* Just use the default table style for now */
+        /*table.ic-data {
+
+        }*/
+    </style>
+
+    <!--CSS for logic-data class'-->
+    <style>
+        /* Overrride the default style for the name column, to make it sitcky */
+        table.logic-data tr td.pin-name {
+            position: -webkit-sticky;
+            position: sticky;
+            left: 0;
+            background-color: #cef0fd;
+        }
+
+        table.logic-data tr:nth-child(even) td.pin-name {
+            background-color: #e7f7fe;
+        }
+
+        /* Overrride the default style for the trace column, to left align it */
+        table.logic-data tr td.pin-logic-trace {
+            text-align: left;
+            padding-left: 0px;
+        }
+
+        /* Handle changes required for better printing */
+        @media print {
+            table.logic-data tr td.pin-name {
+                position: static;
+                left: auto;
+            }
+        }
+    </style>
+
+    <!--CSS for vi-capture class' -->
+    <style type="text/css">
+        /* vi-channel is a container for vi-captures, which displays horizontally */
+        .vi-channel {
+            float: left;
+            width: 50%;
+            min-width: 240px;
+
+            border-color: #0504AA;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 1px;
+
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .vi-channel.Fail {
+            border-color: #dc143c;
+        }
+
+        .vi-channel__header {
+            text-align: left;
+            text-transform: uppercase;
+            font-weight: bold;
+            background-color: #0ba6df;
+            color: #0504AA;
+
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 2px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .vi-channel.Fail .vi-channel__header {
+            background-color: #dc143c;
+            color: #ffffff;
+        }
+
+        .vi-channel__content {
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+
+            padding-top: 5px;
+            padding-right: 4px;
+            padding-bottom: 4px;
+            padding-left: 4px;
+        }
+
+        .vi-channel__content .vi-capture {
+            width: 75%;
+            float: none;
+            display: inline-block;
+        }
+
+        .vi-channel__footer {
+            text-align: center;
+            text-transform: uppercase;
+
+            background-color: #0ba6df;
+            color: #0504AA;
+
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 2px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .vi-channel.Fail .vi-channel__footer {
+            background-color: #dc143c;
+            color: #ffffff;
+        }
+
+        .vi-capture {
+            float: left;
+            width: 25%;
+			max-width: 240px;
+            min-width: 120px;
+
+            border-color: #0504AA;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 1px;
+
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .vi-capture.Fail {
+            border-color: #dc143c;
+        }
+
+        .vi-capture img {
+            width: 100%;
+            vertical-align: middle;
+        }
+
+        .vi-capture__header {
+            text-align: left;
+            text-transform: uppercase;
+            font-weight: bold;
+            background-color: #0ba6df;
+            color: #0504AA;
+
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 2px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .vi-capture.Fail .vi-capture__header {
+            background-color: #dc143c;
+            color: #ffffff;
+        }
+
+        .vi-capture__footer {
+            text-align: center;
+            text-transform: uppercase;
+
+            background-color: #0ba6df;
+            color: #0504AA;
+
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 2px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .vi-capture.Fail .vi-capture__footer {
+            background-color: #dc143c;
+            color: #ffffff;
+        }
+    </style>
+
+    <!--CSS for instrument-capture class' -->
+    <style type="text/css">
+        .instrument-capture {
+            border-color: #0ba6df;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 1px;
+
+            background-color: #ffffff;
+
+            padding-top: 0px;
+            padding-right: 0px;
+            padding-bottom: 0px;
+            padding-left: 0px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .instrument-capture__content img {
+            max-width: 100%;
+            vertical-align: middle;
+        }
+
+        .instrument-capture__header {
+            text-align: left;
+            text-transform: uppercase;
+            font-weight: bold;
+            background-color: #0ba6df;
+            color: #0504AA;
+
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 2px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+
+        .instrument-capture__footer {
+            text-align: center;
+            text-transform: uppercase;
+
+            background-color: #0ba6df;
+            color: #0504AA;
+
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 2px;
+
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+        }
+    </style>
+
+    <!--CSS for switch/slider class' -->
+    <style type="text/css">
+        /* Slide/toggle switch
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+        */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 22px;
+
+            background-color: #0504AA;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 4px;
+            bottom: 4px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: #fae100;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(18px);
+            -ms-transform: translateX(18px);
+            transform: translateX(18px);
+        }
+    </style>
+
+    <!--CSS for system 8 internal browser support, this must be included last -->
+    <!--[if lt IE 9]>
+    <style type="text/css">
+        
+        /* No navbar in the internal browser */
+        .navbar {
+            display: none;
+        }
+ 
+        /* box-sizing: border-box isn't supported so we need to adjust the columns to compensate */
+        .column-10 {
+            width: 8%;
+        }
+
+        .column-20 {
+            width: 18%;
+        }
+
+        .column-25 {
+            width: 23%;
+        }
+
+        .column-30 {
+            width: 28%;
+        }
+
+        .column-33 {
+            width: 31.333%;
+        }
+
+        .column-40 {
+            width: 38%;
+        }
+
+        .column-50 {
+            width: 48%;
+        }
+
+        .column-60 {
+            width: 58%;
+        }
+
+        .column-66 {
+            width: 64.666%;
+        }
+
+        .column-70 {
+            width: 68%;
+        }
+
+        .column-75 {
+            width: 73%;
+        }
+
+        .column-80 {
+            width: 78%;
+        }
+
+        .column-90 {
+            width: 88%;
+        }
+        
+        .column-100 {
+            float: left;
+            width: 98%;
+        }
+
+        .testflow-report-details {
+            width: 95%;
+        }
+        
+        .testflow-report-details__content img {
+            width: 99%;
+        }
+
+        .instrument-capture {
+             width: 99%;
+        }
+
+        .instrument-capture__content img {
+            width: 99%;
+        }
+
+        .vi-channel {
+            width: 47%;
+        }
+
+        .vi-channel__content .vi-capture {
+            zoom: 1;
+            /* Use inline for IE instead of inline-block */
+            display: inline;
+        }
+
+    </style>
+    <![endif]-->
+
+    <!--Script to handle filtering-->
+    <script>
+        function ApplyStepFilter() {
+            var HidePassCheckBox = document.getElementById("show_pass_steps_checkbox");
+            var HideFailCheckBox = document.getElementById("show_fail_steps_checkbox");
+            var HideOtherCheckBox = document.getElementById("show_other_steps_checkbox");
+
+
+            // Get a list of all testflow steps in this report
+            var TestFlowSteps = document.getElementsByClassName("testflow-step");
+            for (var StepHeaderIndex = 0; StepHeaderIndex < TestFlowSteps.length; StepHeaderIndex++) {
+                TestFlowSteps[StepHeaderIndex].classList.remove("hidden");
+
+                if (TestFlowSteps[StepHeaderIndex].classList.contains("Pass")) {
+                    if (HidePassCheckBox.checked == false) {
+                        TestFlowSteps[StepHeaderIndex].classList.add("hidden");
+                    }
+                }
+                else if (TestFlowSteps[StepHeaderIndex].classList.contains("Fail")) {
+                    if (HideFailCheckBox.checked == false) {
+                        TestFlowSteps[StepHeaderIndex].classList.add("hidden");
+                    }
+                }
+                else if (HideOtherCheckBox.checked == false) {
+                    TestFlowSteps[StepHeaderIndex].classList.add("hidden");
+                }
+            }
+        } 
+    </script>
+
+    <!--Script to handle replacing images-->
+    <script>
+        // Handle the header image being clicked
+        function handleHeaderImgDblClick(imageID) {
+            // Redirect the click to the file input
+            document.getElementById('select_header_image_file').click();
+        };
+        function handleEquipmentImgDblClick(imageID) {
+            // Redirect the click to the file input
+            document.getElementById('select_equipment_image_file').click();
+        };
+
+
+        // Handle the file conversion to base64
+        function handleHeaderImgSelect(evt) {
+            // Check for the File API support.
+            if (window.File && window.FileReader && window.FileList && window.Blob) {
+
+                var f = evt.target.files[0]; // FileList object
+                var reader = new FileReader();
+                // Closure to capture the file information.
+                reader.onload = (function (theFile) {
+                    return function (e) {
+                        // Replace the header image with the given file
+                        document.getElementById('header_image').src = e.target.result;
+                    };
+                })(f);
+
+                // Read in the image file as a data URL.
+                reader.readAsDataURL(f);
+            } else {
+                // Not supported in this browser 
+                alert('The File APIs are not fully supported in this browser.');
+            }
+        }
+        function handleEquipmentImgSelect(evt) {
+            // Check for the File API support.
+            if (window.File && window.FileReader && window.FileList && window.Blob) {
+
+                var f = evt.target.files[0]; // FileList object
+                var reader = new FileReader();
+                // Closure to capture the file information.
+                reader.onload = (function (theFile) {
+                    return function (e) {
+                        // Replace the equipment image with the given file
+                        document.getElementById('equipment_image').src = e.target.result;
+                    };
+                })(f);
+
+                // Read in the image file as a data URL.
+                reader.readAsDataURL(f);
+            } else {
+                // Not supported in this browser 
+                alert('The File APIs are not fully supported in this browser.');
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="testflow-report">
+        <div class="testflow-report__header">
+            <div>
+                <input type="file" id="select_header_image_file" onchange="handleHeaderImgSelect(event)" accept=".png, .jpg, .jpeg, .bmp" style="display: none;">
+                <img id="header_image" ondblclick="handleHeaderImgDblClick()" src="data:image/png;base64,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">
+            </div>
+
+            <div class="testflow-report__title">
+                TestFlow Report
+            </div>
+
+            <div class="testflow-report-details">
+                <div class="testflow-report-details__header">
+                    Report Details
+                </div>
+                <div class="row">
+                    <div class="testflow-report-details__content column-50">
+                        <div class="row">
+                            <label class="column-30">TestFlow Name</label><input class="column-70" type="text" readonly="" value="Template FAT.tfl">
+                        </div>
+                        <div class="row">
+                            <label class="column-30">Operator</label><input class="column-70" type="text" readonly="" value="Mike">
+                        </div>
+                        <div class="row">
+                            <label class="column-30">Date</label><input class="column-70" type="text" readonly="" value="05/10/2023">
+                        </div>
+                        <div class="row">
+                            <label class="column-30">Time</label><input class="column-70" type="text" readonly="" value="14:45:10">
+                        </div>
+                    </div>
+
+                    <div class="testflow-report-details__content column-50">
+                        <div class="row">
+                            <label class="column-20">Comment</label>
+                            <textarea style="height:100px;" readonly="" class="column-80"><!--REPORT_COMMENT--></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testflow-report-details__footer"></div>
+            </div>
+
+            <div class="testflow-report-details">
+                <div class="testflow-report-details__header">Equipment Under Test</div>
+                <div class="row">
+                    <div class="testflow-report-details__content column-40">
+                        <input type="file" id="select_equipment_image_file" onchange="handleEquipmentImgSelect(event)" accept=".png, .jpg, .jpeg, .bmp" style="display: none;">
+                        <img id="equipment_image" ondblclick="handleEquipmentImgDblClick()" alt="DOUBLE CLICK TO ADD IMAGE (Use external browser)" src="file:///C:/Users/mike.chester/OneDrive%20-%20Metron%20Group%20Limited/ABI/Template%20FAT/ReportTemplate.htm">
+                    </div>
+
+                    <div class="testflow-report-details__content column-60">
+                        <div class="row">
+                            <label class="column-30">Customer</label>
+                            <input class="column-70" type="text" readonly="" value="<!--CUSTOMER-->">
+                        </div>
+                        <div class="row">
+                            <label class="column-30">Job Number</label>
+                            <input class="column-70" type="text" readonly="" value="<!--JOB_NUMBER-->">
+                        </div>
+                        <div class="row">
+                            <label class="column-30">Part Name</label>
+                            <input class="column-70" type="text" readonly="" value="<!--PART_NAME-->">
+                        </div>
+                        <div class="row">
+                            <label class="column-30">Part Number</label>
+                            <input class="column-70" type="text" readonly="" value="<!--PART_NUMBER-->">
+                        </div>
+                        <div class="row">
+                            <label class="column-30">Serial Number</label>
+                            <input class="column-40" type="text" readonly="" value="<!--SERIAL_NUMBER-->">
+                            <label class="column-5"></label>
+                            <label class="column-15">Revision</label>
+                            <input class="column-10" type="text" readonly="" value="<!--REVISION-->">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testflow-report-details__footer"></div>
+            </div>
+        </div>
+
+        <div class="navbar row">
+            <div class="column-33">
+                <div class="navbar-button row">
+                    <div class="navbar-button__caption column-75">Show Pass Steps</div>
+                    <label style="float: right;" class="switch column-25">
+                        <input type="checkbox" id="show_pass_steps_checkbox" onclick="ApplyStepFilter()" checked="">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="column-33">
+                <div class="navbar-button row">
+                    <div class="navbar-button__caption column-75">Show Fail Steps</div>
+                    <label style="float: right;" class="switch column-25">
+                        <input type="checkbox" id="show_fail_steps_checkbox" onclick="ApplyStepFilter()" checked="">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="column-33">
+                <div class="navbar-button row">
+                    <div class="navbar-button__caption column-75">Show Other Steps</div>
+                    <label style="float: right;" class="switch column-25">
+                        <input type="checkbox" id="show_other_steps_checkbox" onclick="ApplyStepFilter()" checked="">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!--INSERT_STEP_HERE-->
+
+        <div class="testflow-report__footer">
+            End Of Report
+        </div>
+    </div>
+
+
+
+
+
+
+<script language="Javascript1.4">
+    // Apply the default step filters
+    ApplyStepFilter();
+</script>
+
+<div class='testflow-report__watermark'>
+Created By SYSTEM 8 Ultimate U3.58  &#169;ABI Electronics 2023
+</div>
+</body><!--Emulate :after for system 8 internal browser support --><!--[if lt IE 9]>
+<script>
+    function getElementsByClassName(className, tag, elm) {
+        tag = tag || "*";
+        elm = elm || document;
+        var classes = className.split(" "),
+            classesToCheck = [],
+            elements = (tag === "*" && elm.all) ? elm.all : elm.getElementsByTagName(tag),
+            current,
+            returnElements = [],
+            match;
+        for (var k = 0, kl = classes.length; k < kl; k += 1) {
+            classesToCheck.push(new RegExp("(^|\\s)" + classes[k] + "(\\s|$)"));
+        }
+        for (var l = 0, ll = elements.length; l < ll; l += 1) {
+            current = elements[l];
+            match = false;
+            for (var m = 0, ml = classesToCheck.length; m < ml; m += 1) {
+                match = classesToCheck[m].test(current.className);
+                if (!match) {
+                    break;
+                }
+            }
+            if (match) {
+                returnElements.push(current);
+            }
+        }
+        return returnElements;
+    };
+
+    var x = getElementsByClassName("row");
+    for (var i = 0; i < x.length; i++) {
+        var RowAfter = document.createElement("div");
+        RowAfter.style.clear = "both";
+
+        x[i].appendChild(RowAfter);
+    }
+
+</script>
+<![endif]--><!--Only run scripts in browsers that have the correct level of support for JS 
+ SYSTEM 8 internal browser is 1.3 --></html>
