@@ -5,6 +5,8 @@ import csv
 import math
 from enum import Enum
 import sys
+import warnings
+from openpyxl import load_workbook
 
 class Test(Enum):
     AMS_VI = 1
@@ -51,7 +53,7 @@ class Preset_steps:
 
     cur_step = 0
     
-    def AMS_VI(self, text = "AMS VI", pins = 0):
+    def AMS_VI(self, text = "AMS VI", pins = 0, voltage = 5):
         self.cur_step += 1
         createX(Test.AMS_VI)
 
@@ -72,13 +74,13 @@ class Preset_steps:
                     scroll(-120*multi)
                     time.sleep(0.1)
 
-                print("PROBES")
+                #print("PROBES")
             elif "Clip" in pins:
                 pins = pins.removesuffix(" Clip")
                 time.sleep(0.1)
                 scroll(-300)
                 time.sleep(0.1)
-                print("CLIP")
+                #print("CLIP")
                 moveTo(AMS_VI.pinSelect)
                 time.sleep(0.1)
                 scroll(5000)
@@ -95,7 +97,7 @@ class Preset_steps:
 
 
 
-    def AMS_Matrix(self, text = "AMS Matrix", pins = 0):
+    def AMS_Matrix(self, text = "AMS Matrix", pins = 0, voltage = 5):
         self.cur_step += 1
         createX(Test.AMS_Matrix)
         
@@ -189,6 +191,9 @@ rename_time = 0.5
 
 def rename(text, stepNum = 1):
 
+    if text is None:
+        return
+
     if(stepNum >= Step.maxStep):
         #scroll down list
         target = Step.lastStep
@@ -230,44 +235,91 @@ def reporting(test):
     clickAt(TF.setup_close)
 
 
+if len(sys.argv) == 2:
+    file = sys.argv[1]
+else:
+    file = "./testflow template.xlsx"
 
-# RUN
+ignoreSteps = ["RESERVED", "DO NOT EDIT", None]
+
+
+
+warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
 
 pyautogui.FAILSAFE = True
 
 preset = Preset_steps()
 
-with open("run.csv") as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=",")
-    line_count = 0
-    for row in csv_reader:
-        line_count += 1
-        if len(row) == 3:
-            name, step, pins = row  
-        
-        elif len(row) < 3:
-            print("Row " + line_count + " is too short")
+workbook = load_workbook(filename=file, read_only=True, data_only=True)
+
+worksheet = workbook.worksheets[0]
+
+line_count = 0
+
+for value in worksheet.iter_rows(values_only=True):
+    line_count += 1
+
+    match len(value):
+        case 6:
+            num, name, step, pins, probePlus, probeMinus = value
+            notes = None
+            voltage = None
+        case 8:
+            num, name, step, pins, voltage, probePlus, probeMinus, notes = value
+        case _:
+            print("Input row length of " + len(value) + " is not supported")
             sys.exit()
 
-        elif len(row) > 3:
-            print("Row " + line_count + " is too long")
-            sys.exit()
+
+
+    try:
+        voltage = float(voltage.removesuffix("V pkpk"))
+    except:
+        voltage = 5
+
+    if step in ignoreSteps:
+        preset.IGNORE_STEP()
+
+    elif step == "AMS-VI":
+        preset.AMS_VI(name, pins, voltage)
+
+    elif step == "AMS-Matrix":
+        preset.AMS_Matrix(name, pins, voltage)
+
+"""
+
+row_list = []
+for r in worksheet.rows:
+    column = [cell.value for cell in r]
+    row_list.append(column)
+
+for row in row_list:
+    print(row[0])
 
 
 
+    line_count += 1
+    if len(row) == 3:
+        name, step, pins = row  
+    
+    elif len(row) < 3:
+        print("Row " + line_count + " is too short")
+        sys.exit()
 
+    elif len(row) > 3:
+        print("Row " + line_count + " is too long")
+        sys.exit()
+    #print(count, name, step)
 
-        #print(count, name, step)
+    if step in ignoreSteps:
+        preset.IGNORE_STEP()
 
-        if(step == "DO NOT EDIT"):
-            preset.IGNORE_STEP()
+    elif step == "AMS-VI":
+        preset.AMS_VI(name, pins)
 
-        if(step == "AMS-VI"):
-            preset.AMS_VI(name, pins)
-
-        if(step == "AMS-Matrix"):
-            preset.AMS_Matrix(name, pins)
-
+    elif step == "AMS-Matrix":
+        preset.AMS_Matrix(name, pins)
+"""
 
 """
 steps = Preset_steps()
