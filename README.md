@@ -6,8 +6,8 @@ WARNING: When the application is running, the device cannot be used.
 
 ## Testflow template
 
-The
+The template contains a testflow file which has steps which can be used to input information, such as customer, job number, and device codes. It also contains an updated report template with Metron branding and custom information tags. 
 
 ## Code
 
-
+The codebase is written in Python 3.11.6. 
