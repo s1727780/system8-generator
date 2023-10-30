@@ -1,3 +1,5 @@
+import argparse
+from pathlib import Path
 import pyautogui
 import time
 import os
@@ -9,8 +11,8 @@ import warnings
 from openpyxl import load_workbook
 
 class Test(Enum):
-    AMS_VI = 1
-    AMS_Matrix = 2
+    AMS_VI = "AMS-VI"
+    AMS_Matrix = "AMS-Matrix"
 
 
 class Step:
@@ -31,6 +33,7 @@ class TF:
     editMode    = ( 80, 115)
     setup_open  = (187, 1107)
     setup_close = (394,  92)
+    instructions= (175, 830)
 
 
 class ReportManager:
@@ -181,7 +184,7 @@ def moveWindow():
                 #print("found image")
                 break
 
-    start = (location[0] + 50, location[1] + 10)
+    start = (location[0] + 50, location[1] + 12)
 
     clickAt(start)
     time.sleep(0.5)
@@ -235,56 +238,108 @@ def reporting(test):
     clickAt(TF.setup_close)
 
 
-if len(sys.argv) == 2:
-    file = sys.argv[1]
-else:
-    file = "./testflow template.xlsx"
+def addInstructions(step, probePlus, probeMinus, notes):
+    # click on instruction box
 
-ignoreSteps = ["RESERVED", "DO NOT EDIT", None]
+    clickAt(TF.instructions)
+    if probePlus is not None:
+        write("Probe + : ")
+        write(probePlus)
+        pyautogui.press("enter")
+    if probeMinus is not None:
+        write("Probe - : ")
+        write(probeMinus)
+        pyautogui.press("enter")    
+        pyautogui.press("enter")
+    if notes is not None:
+        write("Notes:")
+        pyautogui.press("enter")
+        write(notes)
+    time.sleep(0.2)
+    
+    match step:
+        case Test.AMS_VI:
+            return
+
+        case Test.AMS_Matrix:
+            return
+
+        case _:
+            return
+
+    
+
+# Argument parsing
+parser = argparse.ArgumentParser()
+parser.add_argument("file")
+args = parser.parse_args()
+fileExists = Path(args.file).is_file()
+if not fileExists:
+    print("The target directory doesn't exist")
+    raise SystemExit(1)
 
 
-
+# PyAutoGUI settings 
 warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
-
 pyautogui.FAILSAFE = True
 
+
+ignoreSteps = ["RESERVED", "DO NOT EDIT"]
 preset = Preset_steps()
 
-workbook = load_workbook(filename=file, read_only=True, data_only=True)
+
+#Load excel spreadsheet
+workbook = load_workbook(filename=args.file, read_only=True, data_only=True)
+
+# file = "flows\BN3300-03 - System Monitor.xlsx"
+# workbook = load_workbook(filename=file, read_only=True, data_only=True)
 
 worksheet = workbook.worksheets[0]
-
 line_count = 0
 
 for value in worksheet.iter_rows(values_only=True):
     line_count += 1
 
+    # Extract column values from current row
     match len(value):
         case 6:
             num, name, step, pins, probePlus, probeMinus = value
             notes = None
             voltage = None
         case 8:
+            # print("8 wide input")
             num, name, step, pins, voltage, probePlus, probeMinus, notes = value
+        case 9: 
+            num, name, step, pins, voltage, probePlus, probeMinus, notes, edit = value
         case _:
             print("Input row length of " + len(value) + " is not supported")
             sys.exit()
 
-
-
+    # Remove unnecessary suffixes
     try:
         voltage = float(voltage.removesuffix("V pkpk"))
     except:
         voltage = 5
 
-    if step in ignoreSteps:
+
+    if edit is not None:
+            
+        # Create the appropriate test
+        if step in ignoreSteps:
+            preset.IGNORE_STEP()
+
+        elif step == "AMS-VI":
+            preset.AMS_VI(name, pins, voltage)
+            addInstructions(step, probePlus, probeMinus, notes)
+
+        elif step == "AMS-Matrix":
+            preset.AMS_Matrix(name, pins, voltage)
+            addInstructions(step, probePlus, probeMinus, notes)
+        # Add Test Instructions & Notes
+
+    else:
         preset.IGNORE_STEP()
-
-    elif step == "AMS-VI":
-        preset.AMS_VI(name, pins, voltage)
-
-    elif step == "AMS-Matrix":
-        preset.AMS_Matrix(name, pins, voltage)
+    
 
 """
 
