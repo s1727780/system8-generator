@@ -249,7 +249,7 @@ def addInstructions(step, probePlus, probeMinus, notes):
         write(probePlus)
         pyautogui.press("enter")
     if probeMinus is not None:
-        write("Probe - : ")
+        write("Probe -	  :  ")
         write(probeMinus)
         pyautogui.press("enter")    
         pyautogui.press("enter")
