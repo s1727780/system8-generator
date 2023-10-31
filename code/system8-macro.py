@@ -9,6 +9,8 @@ from enum import Enum
 import sys
 import warnings
 from openpyxl import load_workbook
+import tkinter as tk
+from tkinter import filedialog
 
 class Test(Enum):
     AMS_VI = "AMS-VI"
@@ -267,8 +269,7 @@ def addInstructions(step, probePlus, probeMinus, notes):
         case _:
             return
 
-    
-
+"""   
 # Argument parsing
 parser = argparse.ArgumentParser()
 parser.add_argument("file")
@@ -277,6 +278,20 @@ fileExists = Path(args.file).is_file()
 if not fileExists:
     print("The target directory doesn't exist")
     raise SystemExit(1)
+
+workbook = load_workbook(filename=args.file, read_only=True, data_only=True)
+"""
+
+"""
+# file = "flows\BN3300-03 - System Monitor.xlsx"
+# workbook = load_workbook(filename=file, read_only=True, data_only=True)
+"""
+
+root = tk.Tk()
+root.withdraw()
+
+filepath = filedialog.askopenfilename(filetypes=["Excel files", "*.xlsx", "*.xls", "*.csv"])
+workbook = load_workbook(filename=filepath, read_only=True, data_only=True)
 
 
 # PyAutoGUI settings 
@@ -289,13 +304,17 @@ preset = Preset_steps()
 
 
 #Load excel spreadsheet
-workbook = load_workbook(filename=args.file, read_only=True, data_only=True)
 
-# file = "flows\BN3300-03 - System Monitor.xlsx"
-# workbook = load_workbook(filename=file, read_only=True, data_only=True)
+
+
 
 worksheet = workbook.worksheets[0]
 line_count = 0
+
+
+notes = None
+voltage = None
+edit = None
 
 for value in worksheet.iter_rows(values_only=True):
     line_count += 1
@@ -304,8 +323,7 @@ for value in worksheet.iter_rows(values_only=True):
     match len(value):
         case 6:
             num, name, step, pins, probePlus, probeMinus = value
-            notes = None
-            voltage = None
+
         case 8:
             # print("8 wide input")
             num, name, step, pins, voltage, probePlus, probeMinus, notes = value
