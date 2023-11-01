@@ -290,7 +290,8 @@ workbook = load_workbook(filename=args.file, read_only=True, data_only=True)
 root = tk.Tk()
 root.withdraw()
 
-filepath = filedialog.askopenfilename(filetypes=["Excel files", "*.xlsx", "*.xls", "*.csv"])
+# filepath = filedialog.askopenfilename(filetypes=["Excel files", "*.xlsx", "*.xls", "*.csv"])
+filepath = filedialog.askopenfilename()
 workbook = load_workbook(filename=filepath, read_only=True, data_only=True)
 
 
