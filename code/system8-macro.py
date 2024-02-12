@@ -15,6 +15,7 @@ from tkinter import filedialog
 class Test(Enum):
     AMS_VI = "AMS-VI"
     AMS_Matrix = "AMS-Matrix"
+    none = "None"
 
 
 class Step:
@@ -28,7 +29,7 @@ class Step:
     maxStep     =   26
 
 class Instrument:
-    End         = (387, 62)
+    End         = (387, 62) # Where test window gets dragged to
 
 class TF:
     new         = ( 14,  77)
@@ -43,7 +44,7 @@ class ReportManager:
     AMS_Matrix  = ( 96, 248)
 
 class AMS_VI:
-    AMS_VI      = ( 12, 365)
+    AMS_VI      = ( 12, 360) # Bring up test window
     probeSelect = (400, 110)
     pinSelect   = (400,135)
 
@@ -59,7 +60,7 @@ class Preset_steps:
     cur_step = 0
     
     def AMS_VI(self, text = "AMS VI", pins = 0, voltage = 5):
-        self.cur_step += 1
+        
         createX(Test.AMS_VI)
 
         # Change probe / pins
@@ -103,7 +104,7 @@ class Preset_steps:
 
 
     def AMS_Matrix(self, text = "AMS Matrix", pins = 0, voltage = 5):
-        self.cur_step += 1
+       
         createX(Test.AMS_Matrix)
         
         #change pin number
@@ -122,7 +123,12 @@ class Preset_steps:
         rename(text, self.cur_step)
     
     def IGNORE_STEP(self):
-        self.cur_step += 1
+        return
+
+    def Blank(self, text = "None"):
+        
+        createX(Test.none)
+        rename(text, self.cur_step)
 
 def moveTo(position):
     pyautogui.moveTo(position)
@@ -146,6 +152,8 @@ probes = ["1 Probe", "2 Probes", "3 Probes", "4 Probes"]
 def createX(test):
 
     match test:
+        case Test.none:
+            target = None
         case Test.AMS_VI:
             target = AMS_VI.AMS_VI
         case Test.AMS_Matrix:
@@ -155,16 +163,18 @@ def createX(test):
             sys.exit()
 
     clickAt(Step.addStep)
-    time.sleep(0.2)
-    clickAt(target)
-    time.sleep(0.5)
+    time.sleep(0.3)
+    if(target):
+        clickAt(target)
+        time.sleep(0.5)
 
-    moveWindow()
+        moveWindow()
 
-    time.sleep(0.1)
-    reporting(test)
+        time.sleep(0.1)
+        
+        reporting(test)
 
-    time.sleep(0.1)
+        time.sleep(0.1)
 
 
 images = os.listdir("drag_images")
@@ -186,7 +196,8 @@ def moveWindow():
                 #print("found image")
                 break
 
-    start = (location[0] + 50, location[1] + 12)
+    # TODO: Add match case for different test windows
+    start = (location[0] + 50, location[1] + 8)
 
     clickAt(start)
     time.sleep(0.5)
@@ -331,7 +342,7 @@ for value in worksheet.iter_rows(values_only=True):
         case 9: 
             num, name, step, pins, voltage, probePlus, probeMinus, notes, edit = value
         case _:
-            print("Input row length of " + len(value) + " is not supported")
+            print("Input row length of " + str(len(value)) + " is not supported")
             sys.exit()
 
     # Remove unnecessary suffixes
@@ -340,6 +351,7 @@ for value in worksheet.iter_rows(values_only=True):
     except:
         voltage = 5
 
+    print (line_count)
 
     if edit is not None:
             
@@ -356,8 +368,17 @@ for value in worksheet.iter_rows(values_only=True):
             addInstructions(step, probePlus, probeMinus, notes)
         # Add Test Instructions & Notes
 
+        elif step == "None":
+            preset.Blank(name)
+            addInstructions(step, probePlus, probeMinus, notes)
+
+#        preset.cur_step += 1
+
     else:
         preset.IGNORE_STEP()
+    
+    
+    preset.cur_step += 1
     
 print("\nTestflow complete!!. \nVerify all steps are correct and save.")
 

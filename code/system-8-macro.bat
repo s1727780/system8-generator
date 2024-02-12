@@ -1,3 +1,4 @@
 @echo off
-"env\Scripts\python.exe" "system8-macro.py"
+call .\env\Scripts\activate.bat
+py system8-macro.py
 PAUSE
