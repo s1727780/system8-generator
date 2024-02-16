@@ -10,12 +10,14 @@ import sys
 import warnings
 from openpyxl import load_workbook
 import tkinter as tk
-from tkinter import filedialog
+from tkinter import filedialog, filedialog, messagebox
 
 class Test(Enum):
     AMS_VI = "AMS-VI"
     AMS_Matrix = "AMS-Matrix"
     none = "None"
+    AICT_IC = "AICT IC Tester"
+    BFL_IC = "BFL IC Tester"
 
 
 class Step:
@@ -51,6 +53,12 @@ class AMS_VI:
 class AMS_Matrix:
     AMS_Matrix  = (12,390)
     pinSelect   = (360, 112)
+
+
+class AICT:
+    IC_Tester = (15,206)
+class BFL:
+    IC_Tester = (15,594)
 
 
 class Preset_steps:
@@ -101,8 +109,6 @@ class Preset_steps:
 
         rename(text, self.cur_step)
 
-
-
     def AMS_Matrix(self, text = "AMS Matrix", pins = 0, voltage = 5):
        
         createX(Test.AMS_Matrix)
@@ -122,6 +128,19 @@ class Preset_steps:
             
         rename(text, self.cur_step)
     
+    def AICT_IC_Tester(self, text = "AICT"):
+        
+        createX(Test.AICT_IC, text, self.cur_step)
+
+        AICT_report()
+
+    def BFL_IC_Tester(self, text = "BFL"):
+        
+        createX(Test.BFL_IC, text, self.cur_step)
+
+        BFL_report()
+
+
     def IGNORE_STEP(self):
         return
 
@@ -149,7 +168,7 @@ def scroll(num):
 probes = ["1 Probe", "2 Probes", "3 Probes", "4 Probes"]
 
 
-def createX(test):
+def createX(test, text = None, cur_step = 0):
 
     match test:
         case Test.none:
@@ -158,21 +177,30 @@ def createX(test):
             target = AMS_VI.AMS_VI
         case Test.AMS_Matrix:
             target = AMS_Matrix.AMS_Matrix
+        case Test.AICT_IC:
+            target = AICT.IC_Tester
+        case Test.BFL_IC:
+            target = BFL.IC_Tester
         case _:
             print("createX(" + str(test) + ") is not supported ")
             sys.exit()
 
     clickAt(Step.addStep)
     time.sleep(0.3)
+
+    if (test == Test.AICT_IC or test == Test.BFL_IC):
+        rename(text, cur_step)
+
     if(target):
         clickAt(target)
         time.sleep(0.5)
 
-        moveWindow()
+        if (test == Test.AMS_VI or test == Test.AMS_Matrix):
+            moveWindow()
 
-        time.sleep(0.1)
+            time.sleep(0.1)
         
-        reporting(test)
+            reporting(test)
 
         time.sleep(0.1)
 
@@ -250,6 +278,38 @@ def reporting(test):
     # close window
     clickAt(TF.setup_close)
 
+def AICT_report():
+
+    clickAt(TF.setup_open)
+
+    # Add AICT reporting
+    clickAt((79,201))
+    clickAt((115,216))
+    clickAt((99,232))
+    clickAt((135,264))
+    clickAt((134,279))
+    clickAt((134,327))
+
+    clickAt(TF.setup_close)
+
+def BFL_report():
+
+    clickAt(TF.setup_open)
+
+    # Add BLF reporting
+    clickAt((79,328))
+    clickAt((97,344))
+    clickAt((115,345))
+    clickAt((134,409))
+    clickAt((99,424))
+    clickAt((134,454))
+    clickAt((134,473))
+    clickAt((135,520))
+
+    clickAt(TF.setup_close)
+
+
+
 
 def addInstructions(step, probePlus, probeMinus, notes):
     # click on instruction box
@@ -293,139 +353,207 @@ if not fileExists:
 workbook = load_workbook(filename=args.file, read_only=True, data_only=True)
 """
 
-"""
-# file = "flows\BN3300-03 - System Monitor.xlsx"
-# workbook = load_workbook(filename=file, read_only=True, data_only=True)
-"""
+import shutil
 
-root = tk.Tk()
-root.withdraw()
+class App(tk.Tk):
+    def __init__(self):
+        super().__init__()
 
-# filepath = filedialog.askopenfilename(filetypes=["Excel files", "*.xlsx", "*.xls", "*.csv"])
-filepath = filedialog.askopenfilename()
-workbook = load_workbook(filename=filepath, read_only=True, data_only=True)
+        self.title('Tkinter Yes/No Dialog')
+        self.geometry('300x150')
 
-
-# PyAutoGUI settings 
-warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
-pyautogui.FAILSAFE = True
-
-
-ignoreSteps = ["RESERVED", "DO NOT EDIT"]
-preset = Preset_steps()
-
-
-#Load excel spreadsheet
+        # Quit button
+        # quit_button = ttk.Button(self, text='Quit', command=self.confirm)
+        # quit_button.pack(expand=True)
 
 
 
+        # New docuemnts button
+        new_button = tk.Button(self, text='New Docs', command=self.newDocs)
+        new_button.pack(expand=True)
+        # Run macro button
+        run_button = tk.Button(self, text='Run Macro', command=self.runMacro)
+        run_button.pack(expand=True)
 
-worksheet = workbook.worksheets[0]
-line_count = 0
+#     def confirm(self):
+#         answer = askyesno(title='Confirmation',
+#                           message='Are you sure that you want to quit?')
+#         if answer:
+#             self.destroy()
 
 
-notes = None
-voltage = None
-edit = None
+    excelFilename = "Testflow.xlsx"
+    excelFolderPath = "templates/"
+    tfFilename = "Testflow.tfl"
+    tfFolderPath = "templates/"
 
-for value in worksheet.iter_rows(values_only=True):
-    line_count += 1
+    def newDocs(self):
 
-    # Extract column values from current row
-    match len(value):
-        case 6:
-            num, name, step, pins, probePlus, probeMinus = value
+        root = tk.Tk()
+        root.withdraw()
+        folder_selected = filedialog.askdirectory()
 
-        case 8:
-            # print("8 wide input")
-            num, name, step, pins, voltage, probePlus, probeMinus, notes = value
-        case 9: 
-            num, name, step, pins, voltage, probePlus, probeMinus, notes, edit = value
-        case _:
-            print("Input row length of " + str(len(value)) + " is not supported")
-            sys.exit()
+        # Copy files
 
-    # Remove unnecessary suffixes
-    try:
-        voltage = float(voltage.removesuffix("V pkpk"))
-    except:
-        voltage = 5
+#        print("copy " + self.excelFolderPath  + self.excelFilename    + " " + folder_selected + "/" + self.excelFilename)
 
-    print (line_count)
+        shutil.copy("./" + self.excelFolderPath + self.excelFilename   , folder_selected)
+        shutil.copy("./" + self.tfFolderPath + self.tfFilename         , folder_selected)
 
-    if edit is not None:
+        messagebox.showinfo("Files generated", "The files have been generated in the target directory")
+
+        self.destroy()
+        
+        
+#        print("making new docs")
+#        print(folder_selected)
+
+    #---------------------#
+    # Get input file
+    def runMacro(self):
+
+        root = tk.Tk()
+        root.withdraw()
+
+
+        # filepath = filedialog.askopenfilename(filetypes=["Excel files", "*.xlsx", "*.xls", "*.csv"])
+        filepath = filedialog.askopenfilename()
+        workbook = load_workbook(filename=filepath, read_only=True, data_only=True)
+
+
+        # PyAutoGUI settings 
+        warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
+        pyautogui.FAILSAFE = True
+
+
+        ignoreSteps = ["RESERVED", "DO NOT EDIT"]
+        preset = Preset_steps()
+
+
+        #Load excel spreadsheet
+
+        worksheet = workbook.worksheets[0]
+        line_count = 0
+
+
+        notes = None
+        voltage = None
+        edit = None
+
+        for value in worksheet.iter_rows(values_only=True):
+            line_count += 1
+
+            # Extract column values from current row
+            match len(value):
+                case 6:
+                    num, name, step, pins, probePlus, probeMinus = value
+
+                case 8:
+                    # print("8 wide input")
+                    num, name, step, pins, voltage, probePlus, probeMinus, notes = value
+                case 9: 
+                    num, name, step, pins, voltage, probePlus, probeMinus, notes, edit = value
+                case _:
+                    print("Input row length of " + str(len(value)) + " is not supported")
+                    sys.exit()
+
+            # Remove unnecessary suffixes
+            try:
+                voltage = float(voltage.removesuffix("V pkpk"))
+            except:
+                voltage = 5
+
+            print (line_count)
+
+            if edit is not None:
+                    
+                # Create the appropriate test
+                if step in ignoreSteps:
+                    preset.IGNORE_STEP()
+
+                elif step == "AMS-VI":
+                    preset.AMS_VI(name, pins, voltage)
+                    addInstructions(step, probePlus, probeMinus, notes)
+
+                elif step == "AMS-Matrix":
+                    preset.AMS_Matrix(name, pins, voltage)
+                    addInstructions(step, probePlus, probeMinus, notes)
+                # Add Test Instructions & Notes
+
+                elif step == "AICT IC Tester":
+                    preset.AICT_IC_Tester(name)
+                    addInstructions(step, probePlus, probeMinus, notes)
+                # Add Test Instructions & Notes
+
+                elif step == "BFL IC Tester":
+                    preset.BFL_IC_Tester(name)
+                    addInstructions(step, probePlus, probeMinus, notes)
+                # Add Test Instructions & Notes
+
+
+                elif step == "None":
+                    preset.Blank(name)
+                    addInstructions(step, probePlus, probeMinus, notes)
+
+        #        preset.cur_step += 1
+
+            else:
+                preset.IGNORE_STEP()
             
-        # Create the appropriate test
-        if step in ignoreSteps:
-            preset.IGNORE_STEP()
+            
+            preset.cur_step += 1
 
-        elif step == "AMS-VI":
-            preset.AMS_VI(name, pins, voltage)
-            addInstructions(step, probePlus, probeMinus, notes)
+        #TODO: Create popup for when complete
+        print("\nTestflow complete!!. \nVerify all steps are correct and save.")
 
-        elif step == "AMS-Matrix":
-            preset.AMS_Matrix(name, pins, voltage)
-            addInstructions(step, probePlus, probeMinus, notes)
-        # Add Test Instructions & Notes
+        """
 
-        elif step == "None":
-            preset.Blank(name)
-            addInstructions(step, probePlus, probeMinus, notes)
+        row_list = []
+        for r in worksheet.rows:
+            column = [cell.value for cell in r]
+            row_list.append(column)
 
-#        preset.cur_step += 1
-
-    else:
-        preset.IGNORE_STEP()
-    
-    
-    preset.cur_step += 1
-
-#TODO: Create popup for when complete
-print("\nTestflow complete!!. \nVerify all steps are correct and save.")
-
-"""
-
-row_list = []
-for r in worksheet.rows:
-    column = [cell.value for cell in r]
-    row_list.append(column)
-
-for row in row_list:
-    print(row[0])
+        for row in row_list:
+            print(row[0])
 
 
 
-    line_count += 1
-    if len(row) == 3:
-        name, step, pins = row  
-    
-    elif len(row) < 3:
-        print("Row " + line_count + " is too short")
-        sys.exit()
+            line_count += 1
+            if len(row) == 3:
+                name, step, pins = row  
+            
+            elif len(row) < 3:
+                print("Row " + line_count + " is too short")
+                sys.exit()
 
-    elif len(row) > 3:
-        print("Row " + line_count + " is too long")
-        sys.exit()
-    #print(count, name, step)
+            elif len(row) > 3:
+                print("Row " + line_count + " is too long")
+                sys.exit()
+            #print(count, name, step)
 
-    if step in ignoreSteps:
-        preset.IGNORE_STEP()
+            if step in ignoreSteps:
+                preset.IGNORE_STEP()
 
-    elif step == "AMS-VI":
-        preset.AMS_VI(name, pins)
+            elif step == "AMS-VI":
+                preset.AMS_VI(name, pins)
 
-    elif step == "AMS-Matrix":
-        preset.AMS_Matrix(name, pins)
-"""
+            elif step == "AMS-Matrix":
+                preset.AMS_Matrix(name, pins)
+        """
 
-"""
-steps = Preset_steps()
+        """
+        steps = Preset_steps()
 
-steps.AMS_VI()
-print(steps.cur_step)
-steps.AMS_Matrix()
-print(steps.cur_step)
+        steps.AMS_VI()
+        print(steps.cur_step)
+        steps.AMS_Matrix()
+        print(steps.cur_step)
 
-# Start - move all scrollables to the top 
+        # Start - move all scrollables to the top 
 
-"""
+        """
+
+
+
+app = App()
+app.mainloop()
