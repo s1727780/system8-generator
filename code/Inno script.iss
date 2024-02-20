@@ -4,7 +4,7 @@
 #define MyAppName "TFGen"
 #define MyAppVersion "0.1"
 #define MyAppPublisher "Metron Group"
-#define MyAppURL "https://www.example.com/"
+#define MyAppURL "https://www.metrongroup.co.uk/"
 #define MyAppExeName "system8-macro.exe"
 
 [Setup]
@@ -21,7 +21,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
-;PrivilegesRequired=lowest
+PrivilegesRequired=lowest
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
