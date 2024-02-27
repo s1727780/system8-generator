@@ -114,29 +114,32 @@ class Preset_steps:
         createX(Test.AMS_Matrix)
         
         #change pin number
-        if pins != 0:
-            if "Clip" in pins:
-                pins = pins.removesuffix(" Clip")
-            moveTo(AMS_Matrix.pinSelect)
-            time.sleep(0.1)
-            scroll(5000)
-            
-            multi = math.floor(float(pins) / 2) -1
+        if(pins):
+            if pins != 0:
+                if "Clip" in pins:
+                    pins = pins.removesuffix(" Clip")
+                moveTo(AMS_Matrix.pinSelect)
+                time.sleep(0.1)
+                scroll(5000)
+                
+                multi = math.floor(float(pins) / 2) -1
 
-            scroll(-120*multi)
-            time.sleep(0.1)
+                scroll(-120*multi)
+                time.sleep(0.1)
             
         rename(text, self.cur_step)
     
     def AICT_IC_Tester(self, text = "AICT"):
         
         createX(Test.AICT_IC, text, self.cur_step)
+        moveWindow()
 
         AICT_report()
 
     def BFL_IC_Tester(self, text = "BFL"):
         
         createX(Test.BFL_IC, text, self.cur_step)
+        moveWindow()
 
         BFL_report()
 
@@ -219,17 +222,24 @@ def moveWindow():
 
     if location is None:
         for image in images:
-            location = pyautogui.locateOnScreen("drag_images/"+image, 1)
+            try:
+               location = pyautogui.locateOnScreen("drag_images/"+image, 1)
+            except:
+                messagebox.showerror("Drag Images", "The drag image could not be found")
+        
             if location != None:
-                #print("found image")
                 break
 
-    # TODO: Add match case for different test windows
-    start = (location[0] + 50, location[1] + 8)
+    if(location is None):
+        print("Error: Not able to find window")
+        
+    else:
 
-    clickAt(start)
-    time.sleep(0.5)
-    pyautogui.dragTo(Instrument.End, duration=0.25)
+        start = (location[0] + 50, location[1] + 8)
+
+        clickAt(start)
+        time.sleep(0.5)
+        pyautogui.dragTo(Instrument.End, duration=0.25)
 
 rename_time = 0.5
 
@@ -359,7 +369,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.title('Tkinter Yes/No Dialog')
+        self.title('TFGen V0.1')
         self.geometry('300x150')
 
         # Quit button
@@ -368,7 +378,7 @@ class App(tk.Tk):
 
 
 
-        # New docuemnts button
+        # New documents button
         new_button = tk.Button(self, text='New Docs', command=self.newDocs)
         new_button.pack(expand=True)
         # Run macro button
@@ -401,10 +411,9 @@ class App(tk.Tk):
         shutil.copy("./" + self.tfFolderPath + self.tfFilename         , folder_selected)
 
         messagebox.showinfo("Files generated", "The files have been generated in the target directory")
-
-        self.destroy()
         
-        
+        # os._exit(1)
+        sys.exit()
 #        print("making new docs")
 #        print(folder_selected)
 
@@ -455,6 +464,7 @@ class App(tk.Tk):
                     num, name, step, pins, voltage, probePlus, probeMinus, notes, edit = value
                 case _:
                     print("Input row length of " + str(len(value)) + " is not supported")
+                    messagebox.showerror("Input file", "The input excel file is not valid.\nCheck column width has not changed.")
                     sys.exit()
 
             # Remove unnecessary suffixes
@@ -506,6 +516,8 @@ class App(tk.Tk):
         #TODO: Create popup for when complete
         print("\nTestflow complete!!. \nVerify all steps are correct and save.")
 
+        messagebox.showinfo("Testflow completed", "The testflow has been generated ")
+        sys.exit()
         """
 
         row_list = []
