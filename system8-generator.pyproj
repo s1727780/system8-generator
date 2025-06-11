@@ -12,6 +12,7 @@
     <Name>system8-generator</Name>
     <RootNamespace>system8-generator</RootNamespace>
     <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <SuppressPackageInstallationPrompt>True</SuppressPackageInstallationPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -3326,6 +3327,7 @@
     <Content Include="code\templates\Testflow.xlsx" />
     <Content Include="code\testflow setup.xltx" />
     <Content Include="code\testflow template.xlsx" />
+    <Content Include="TODOs.md" />
     <Content Include="code\__pycache__\system8-macro.cpython-312.pyc" />
     <Content Include="LICENSE" />
     <Content Include="README.md" />
