@@ -350,18 +350,6 @@ def addInstructions(step, probePlus, probeMinus, notes):
         case _:
             return
 
-"""   
-# Argument parsing
-parser = argparse.ArgumentParser()
-parser.add_argument("file")
-args = parser.parse_args()
-fileExists = Path(args.file).is_file()
-if not fileExists:
-    print("The target directory doesn't exist")
-    raise SystemExit(1)
-
-workbook = load_workbook(filename=args.file, read_only=True, data_only=True)
-"""
 
 import shutil
 
@@ -518,52 +506,7 @@ class App(tk.Tk):
 
         messagebox.showinfo("Testflow completed", "The testflow has been generated ")
         sys.exit()
-        """
 
-        row_list = []
-        for r in worksheet.rows:
-            column = [cell.value for cell in r]
-            row_list.append(column)
-
-        for row in row_list:
-            print(row[0])
-
-
-
-            line_count += 1
-            if len(row) == 3:
-                name, step, pins = row  
-            
-            elif len(row) < 3:
-                print("Row " + line_count + " is too short")
-                sys.exit()
-
-            elif len(row) > 3:
-                print("Row " + line_count + " is too long")
-                sys.exit()
-            #print(count, name, step)
-
-            if step in ignoreSteps:
-                preset.IGNORE_STEP()
-
-            elif step == "AMS-VI":
-                preset.AMS_VI(name, pins)
-
-            elif step == "AMS-Matrix":
-                preset.AMS_Matrix(name, pins)
-        """
-
-        """
-        steps = Preset_steps()
-
-        steps.AMS_VI()
-        print(steps.cur_step)
-        steps.AMS_Matrix()
-        print(steps.cur_step)
-
-        # Start - move all scrollables to the top 
-
-        """
 
 
 
