@@ -79,6 +79,17 @@ system8-generator/ <br>
 ├── installer/ <br>
 └── README.md <br>
 
+| Folder       | Contents                              | Notes                        |
+| ------------ | ------------------------------------- | ---------------------------- |
+| `src/`       | Main Python logic                     | Entry point in `__main__.py` |
+| `assets/`    | Images/icons/static files             | Input only                   |
+| `data/`      | Runtime-generated or downloaded files | Don't version-control        |
+| `build/`     | PyInstaller or other build outputs    | Don't version-control        |
+| `installer/` | `.iss` config, icons                  | Tied to Inno Setup builds    |
+| `tests/`     | Unit tests                            | Optional but recommended     |
+| `venv/`      | Virtual env                           | Ignore from git and VS       |
+
+
 ---
 
 ## Milestones
