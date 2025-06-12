@@ -928,8 +928,15 @@
     <Compile Include="code\env\Lib\site-packages\_distutils_hack\__init__.py" />
     <Compile Include="code\print-position.py" />
     <Compile Include="code\system8-macro.py" />
+    <Compile Include="src\AICT-macro.py" />
+    <Compile Include="src\BFL-macro.py" />
+    <Compile Include="src\print-position.py" />
+    <Compile Include="src\system8-macro.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="assets\" />
+    <Folder Include="assets\drag_images\" />
+    <Folder Include="assets\New file test\" />
     <Folder Include="code\" />
     <Folder Include="code\build\" />
     <Folder Include="code\build\system8-macro\" />
@@ -1220,8 +1227,18 @@
     <Folder Include="code\shortcuts\" />
     <Folder Include="code\templates\" />
     <Folder Include="code\__pycache__\" />
+    <Folder Include="data\" />
+    <Folder Include="installer\" />
+    <Folder Include="scripts\" />
+    <Folder Include="src\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\drag_images\aict-analogue-ic-tester-drag.png" />
+    <Content Include="assets\drag_images\ams-matrix-tester-drag.png" />
+    <Content Include="assets\drag_images\ams-vi-tester-drag.png" />
+    <Content Include="assets\drag_images\bfl-digital-ic-tester-drag.png" />
+    <Content Include="assets\New file test\Testflow.tfl" />
+    <Content Include="assets\New file test\Testflow.xlsx" />
     <Content Include="code\AICT-macro.bat" />
     <Content Include="code\BFL-macro.bat" />
     <Content Include="code\build\system8-macro\Analysis-00.toc" />
@@ -3327,6 +3344,13 @@
     <Content Include="code\templates\Testflow.xlsx" />
     <Content Include="code\testflow setup.xltx" />
     <Content Include="code\testflow template.xlsx" />
+    <Content Include="installer\Inno script.iss" />
+    <Content Include="scripts\AICT-macro.bat" />
+    <Content Include="scripts\BFL-macro.bat" />
+    <Content Include="scripts\compile code.bat" />
+    <Content Include="scripts\print-position-macro.bat" />
+    <Content Include="scripts\script.bat" />
+    <Content Include="scripts\system-8-macro.bat" />
     <Content Include="TODOs.md" />
     <Content Include="code\__pycache__\system8-macro.cpython-312.pyc" />
     <Content Include="LICENSE" />
