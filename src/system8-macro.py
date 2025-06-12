@@ -354,36 +354,33 @@ def addInstructions(step, probePlus, probeMinus, notes):
 import shutil
 
 class App(tk.Tk):
+
+    excelFilename = "Testflow.xlsx"
+    excelFolderPath = "assets/templates/"
+    tfFilename = "Testflow.tfl"
+    tfFolderPath = "assets/templates/"
+
     def __init__(self):
         super().__init__()
+
 
         self.title('TFGen V0.1')
         self.geometry('300x150')
 
-        # Quit button
-        # quit_button = ttk.Button(self, text='Quit', command=self.confirm)
-        # quit_button.pack(expand=True)
-
-
-
-        # New documents button
+        
         new_button = tk.Button(self, text='New Docs', command=self.newDocs)
         new_button.pack(expand=True)
-        # Run macro button
+
         run_button = tk.Button(self, text='Run Macro', command=self.runMacro)
         run_button.pack(expand=True)
 
-#     def confirm(self):
-#         answer = askyesno(title='Confirmation',
-#                           message='Are you sure that you want to quit?')
-#         if answer:
-#             self.destroy()
+        quit_button = tk.Button(self, text='Quit', command=self.quitApp)
+        quit_button.pack(expand=True)
 
 
-    excelFilename = "Testflow.xlsx"
-    excelFolderPath = "templates/"
-    tfFilename = "Testflow.tfl"
-    tfFolderPath = "templates/"
+    def quitApp(self):
+        sys.exit();
+
 
     def newDocs(self):
 
@@ -391,29 +388,21 @@ class App(tk.Tk):
         root.withdraw()
         folder_selected = filedialog.askdirectory()
 
-        # Copy files
-
-#        print("copy " + self.excelFolderPath  + self.excelFilename    + " " + folder_selected + "/" + self.excelFilename)
-
+        # Duplicate files
         shutil.copy("./" + self.excelFolderPath + self.excelFilename   , folder_selected)
         shutil.copy("./" + self.tfFolderPath + self.tfFilename         , folder_selected)
 
         messagebox.showinfo("Files generated", "The files have been generated in the target directory")
         
-        # os._exit(1)
         sys.exit()
-#        print("making new docs")
-#        print(folder_selected)
 
-    #---------------------#
-    # Get input file
+
     def runMacro(self):
 
         root = tk.Tk()
         root.withdraw()
 
 
-        # filepath = filedialog.askopenfilename(filetypes=["Excel files", "*.xlsx", "*.xls", "*.csv"])
         filepath = filedialog.askopenfilename()
         workbook = load_workbook(filename=filepath, read_only=True, data_only=True)
 
@@ -506,7 +495,7 @@ class App(tk.Tk):
 
         messagebox.showinfo("Testflow completed", "The testflow has been generated ")
         sys.exit()
-
+        
 
 
 
