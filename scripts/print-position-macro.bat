@@ -1,3 +1,5 @@
 @echo off
-"env\Scripts\python.exe" "print-position.py"
+cd ..
+call env\Scripts\activate.bat
+py src/print-position.py
 PAUSE
