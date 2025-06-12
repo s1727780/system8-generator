@@ -1,4 +1,5 @@
 @echo off
-call .\env\Scripts\activate.bat
-py BFL-macro.py
+cd ..
+call env\Scripts\activate.bat
+py src\BFL-macro.py
 EXIT
