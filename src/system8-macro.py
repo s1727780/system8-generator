@@ -208,14 +208,14 @@ def createX(test, text = None, cur_step = 0):
         time.sleep(0.1)
 
 
-images = os.listdir("drag_images")
+images = os.listdir("assets/drag_images")
 
 def moveWindow():
 
     location = None
 
     for image in images:
-        location = pyautogui.locateOnScreen("drag_images/"+image, 0.4)
+        location = pyautogui.locateOnScreen("assets/drag_images/"+image, 0.4)
         if location != None:
             #print("found image")
             break
@@ -223,7 +223,7 @@ def moveWindow():
     if location is None:
         for image in images:
             try:
-               location = pyautogui.locateOnScreen("drag_images/"+image, 1)
+               location = pyautogui.locateOnScreen("assets/drag_images/"+image, 1)
             except:
                 messagebox.showerror("Drag Images", "The drag image could not be found")
         
