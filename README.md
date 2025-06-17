@@ -94,30 +94,24 @@ system8-generator/ <br>
 
 ## Milestones
 
-* [ ] Define MVP features (macro from CSV, mouse/keyboard actions, delays, logging)
-* [ ] Set up project structure and initialize Git
-* [ ] Implement CSV parser module
-* [ ] Implement macro executor (using `pyautogui` or `pynput`)
-* [ ] Add logging and fail-safe system (e.g., escape via mouse corner)
+* [x] Define MVP features (macro from CSV, mouse/keyboard actions, delays, logging)
+* [x] Set up project structure and initialize Git
+* [x] Implement CSV parser module
+* [x] Implement macro executor (using `pyautogui`)
+* [x] Add logging and fail-safe system (e.g., escape via mouse corner)
 * [ ] Add CLI interface for selecting and running macros
-* [ ] Add support for extended actions (e.g., hotkeys, scroll, key up/down)
-* [ ] Add support for delays and repeat actions
-* [ ] Add JSON/YAML macro format support (optional)
-* [ ] Build GUI using Tkinter or PySimpleGUI
-* [ ] Integrate GUI with macro engine
+* [x] Build GUI using Tkinter
+* [x] Integrate GUI with macro engine
 * [ ] Add error handling and user feedback in GUI
 * [ ] Add basic unit tests (parser, macro engine)
-* [ ] Package app using PyInstaller
-* [ ] Test executable on Windows 10/11
-* [ ] (Optional) Add config saving/history using SQLite
-* [ ] (Optional) Add FastAPI backend for future remote/API control
-* [ ] (Optional) Add scheduling or automation profiles
+* [x] Package app using Inno Setup
+* [x] Test executable on Windows 10/11
 * [ ] (Optional) Digitally sign the executable for distribution
 
 
 ---
 
-## Testing (TBD)
+## Testing (To be implemented)
 
 - Unit tests for task logic and validation
 - Integration tests for API endpoints
