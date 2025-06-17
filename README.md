@@ -135,8 +135,13 @@ system8-generator/ <br>
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/project-management-app.git
-cd project-management-app
+git clone https://github.com/s1727780/system8-generator.git
+cd system8-generator
 
-# Setup and run
-uvicorn main:app   # for FastAPI
+# Setup environment
+py -m venv .venv
+.\.venv\Scripts\activate
+py -m pip install -r requirements.txt
+
+# Run project
+py src\system8-macro.py
